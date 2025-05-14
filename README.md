@@ -1,3 +1,19 @@
+# 技术选型
+
+Vue3 + Typescript + pinia ，
+
+# 组件库选用
+
+[Naive UI](https://www.naiveui.com/)
+
+# 图标库
+
+使用xicons作为图标库
+
+# CSS方案
+
+使用原子化css方案，unocss
+
 # naive-UI-template
 
 This template should help get you started developing with Vue 3 in Vite.
