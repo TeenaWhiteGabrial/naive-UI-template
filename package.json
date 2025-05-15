@@ -17,6 +17,7 @@
     "@arco-design/color": "^0.4.0",
     "@vicons/ionicons5": "^0.13.0",
     "@vueuse/core": "^13.1.0",
+    "axios": "^1.9.0",
     "naive-ui": "^2.41.0",
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "^4.3.0",

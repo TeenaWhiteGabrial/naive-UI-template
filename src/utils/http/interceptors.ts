@@ -1,8 +1,11 @@
-import { useAuthStore } from '@/stores'
-import { resolveResError } from './helpers'
+import { useAuthStore } from '@/stores';
+import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { resolveResError } from './helpers';
 
-export function setupInterceptors(axiosInstance) {
-  function reqResolve(config) {
+export function setupInterceptors(axiosInstance: AxiosInstance) {
+  function reqResolve(config: InternalAxiosRequestConfig & {
+    noNeedToken?: boolean
+  }) {
     // 处理不需要token的请求
     if (config.noNeedToken) {
       return config
@@ -10,19 +13,18 @@ export function setupInterceptors(axiosInstance) {
 
     const { accessToken } = useAuthStore()
     if (accessToken) {
-      // token: Bearer + xxx
       config.headers.Authorization = `${accessToken}`
     }
 
     return config
   }
 
-  function reqReject(error) {
+  function reqReject(error: any) {
     return Promise.reject(error)
   }
 
   const SUCCESS_CODES = [0, 200]
-  function resResolve(response) {
+  function resResolve(response: { data: any; status: any; config: any; statusText: any; headers: any; }) {
     const { data, status, config, statusText, headers } = response
     if (headers['content-type']?.includes('json')) {
       if (SUCCESS_CODES.includes(data?.code)) {
@@ -40,11 +42,11 @@ export function setupInterceptors(axiosInstance) {
     return Promise.resolve(data ?? response)
   }
 
-  async function resReject(error) {
+  async function resReject(error: { response: { data: any; status?: any; config?: any; }; code: any; message: string; }) {
     if (!error || !error.response) {
       const code = error?.code
       /** 根据code处理对应的操作，并返回处理后的message */
-      const message = resolveResError(code, error.message)
+      const message = resolveResError(code, error.message) || '未知异常'
       window.$message?.error(message)
       return Promise.reject({ code, message, error })
     }

@@ -15,7 +15,3 @@ export function createAxios(options = {}) {
 }
 
 export const request = createAxios()
-
-export const mockRequest = createAxios({
-  baseURL: '/mock-api',
-})

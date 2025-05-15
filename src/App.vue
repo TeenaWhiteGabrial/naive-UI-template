@@ -42,6 +42,9 @@
   //   appStore.layout = ''
   // }
   const route = useRoute()
+  // - 当路由或应用布局设置改变时，自动更新布局组件。
+  // - 缓存计算结果以提高性能。
+  // - 支持动态地根据应用状态加载和显示不同的布局。
   const Layout = computed(() => {
     if (!route.matched?.length) {
       return null

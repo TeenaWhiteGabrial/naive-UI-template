@@ -1,4 +1,4 @@
-import { useAppStore } from '@/storess'
+import { useAppStore } from '@/stores'
 import * as NaiveUI from 'naive-ui'
 
 
